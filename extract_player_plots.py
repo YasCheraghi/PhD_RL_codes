@@ -7,6 +7,8 @@ import well_point_converter as point_converter
 import interpretation_converter
 import plotting_utility
 import matplotlib.pyplot as plt
+from sklearn.metrics import r2_score
+
 
 
 pd.set_option('display.max_columns', None) 
@@ -154,6 +156,26 @@ if __name__ == '__main__':
     #plotting_utility.plot_interpretation(player_round_6,('ef6f9322-61e6-447c-a7dc-642dc94e2ce1', 170305337) , show=False, max_tvd=100)
     
     
-    
-    
+# Scatter plot for scores 
+
+data=pd.read_excel('//fil031.uis.no/emp05/2925376/Desktop/Geosteering Paper/Working Folder/results_ALL_meg.xlsx', sheet_name='all_scores(RU)', header=1)
+
+conv_score=data.convscore
+unconv_score=data.unconvscore
+player_number=data.Player
+company=data.Company
+region=data.Region
+
+
+# scatter plot of scores for all players in two rounds versus each other
+plt.scatter(conv_score,unconv_score,c='yellow', edgecolors='black')
+
+m, b = np.polyfit(conv_score,unconv_score, 1)
+plt.plot(conv_score, m*conv_score + b)
+r2=r2_score(conv_score, unconv_score)
+plt.xlabel('Total Score, Conventional Round')
+plt.ylabel('Total Score, Unconventional Round')
+
+
+
     
